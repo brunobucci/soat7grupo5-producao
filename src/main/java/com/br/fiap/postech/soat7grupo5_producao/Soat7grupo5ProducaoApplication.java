@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 
 @SpringBootApplication
+@EnableAutoConfiguration(exclude={MongoAutoConfiguration.class})
 @OpenAPIDefinition(info = 
 @Info(title = "Soat7grupo5 API - Produção", 
 	version = "1.0", 
