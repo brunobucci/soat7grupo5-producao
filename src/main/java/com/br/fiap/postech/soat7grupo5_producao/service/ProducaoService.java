@@ -23,7 +23,7 @@ public class ProducaoService {
 	private ProducaoRepository producaoRepository;
 
 	@Value("${url.api.pedidos}")
-    String apiUrl;
+    String urlApiPedido;
 
 	public List<ProducaoEntity> buscarPedidosProducaoCozinha() {
 		return producaoRepository.findAll();
@@ -38,13 +38,13 @@ public class ProducaoService {
 		}
 
 		if(status.equals("3")) {
-			atualizaStatusNoPedidoAPI(idPedido);
+			atualizaStatusNoPedidoAPI(idPedido, "4");
 		}
 		
 		return pedidoEntity;
 	}
 
-	private void atualizaStatusNoPedidoAPI(String idPedido) {
+	private void atualizaStatusNoPedidoAPI(String idPedido, String status) {
 		try {
 			RestTemplate restTemplate = new RestTemplate();
 
@@ -54,7 +54,7 @@ public class ProducaoService {
             HttpEntity<String> request = new HttpEntity<>(headers);
 
 			restTemplate.exchange(
-                    apiUrl + idPedido + "/status/4",
+					urlApiPedido + idPedido + "/status/" + status,
                     HttpMethod.PUT,
                     request,
                     String.class

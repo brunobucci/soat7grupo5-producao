@@ -34,14 +34,15 @@ public class ProducaoController {
 	}
 	@PutMapping(path="{idPedido}/status/{idStatus}")
 	@Operation(summary = "Atualizar status da produção no pedido")
-	ResponseEntity<?> atualizarStatusProducaoNoPedido(@Parameter(description = "ID do pedido.", example = "1") @PathVariable String idPedido, @Parameter(description = "ID do status do pedido (1: Recebido, 2: Em preparação, 3: Pronto).", example = "1") @PathVariable String idStatus) {
+	ResponseEntity<?> atualizarStatusProducaoNoPedido(@Parameter(description = "ID do pedido.", example = "1") @PathVariable String idPedido, 
+			@Parameter(description = "ID do status do pedido (1: Recebido, 2: Em preparação, 3: Pronto).", example = "1") @PathVariable String idStatus) {
 		return new ResponseEntity<>(producaoService.atualizarStatusProducaoNoPedido(idPedido, idStatus), HttpStatus.OK);
 	}
 	
 	@PostMapping(path="/registrar")
 	@Operation(summary = "Registrar pedido.")
-	ResponseEntity<?>  registrarPedido(@RequestBody ProducaoDto pedidoDto) {
-		ProducaoDto pedidoRetornoDto = producaoService.salvarPedido(pedidoDto);
+	ResponseEntity<?>  registrarPedido(@RequestBody ProducaoDto producaoDto) {
+		ProducaoDto pedidoRetornoDto = producaoService.salvarPedido(producaoDto);
 		return new ResponseEntity<>(pedidoRetornoDto, HttpStatus.CREATED);
 	}
 }
