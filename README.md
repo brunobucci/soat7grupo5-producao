@@ -1,6 +1,6 @@
 # Tech Challenge Pos Tech SOAT7GRUPO5 - Fase 4
 
-## Repositório: Microserviço Produção (MySQL)
+## Repositório: Microserviço Produção (MongoDB)
 
 ### Video
 
