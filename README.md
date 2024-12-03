@@ -16,7 +16,7 @@ Link do Swagger do Microserviço Produção: [http://ec2-44-203-38-152.compute-1
 
 
 ### Diagrama Arquitetura Microserviços
-![Diagrama Microserviços](https://github.com/brunobucci/soat7grupo5-app/blob/6eabe52ca5186a3b11219893b0fb98ab81517bd9/documentacao/arquitetura.png)
+![Diagrama Microserviços](https://github.com/brunobucci/soat7grupo5-app/blob/88dbe978b8a463100272ccfd7c82e587242ece3c/documentacao/arquitetura.png)
 
 
 ## Integrantes - Grupo 5:
