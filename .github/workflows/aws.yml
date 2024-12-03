@@ -1,0 +1,72 @@
+name: Deploy Produção on AWS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout inicial
+      - name: Checkout Terraform repository
+        uses: actions/checkout@v3
+
+      # Configuração do Java 21
+      - name: Set up Java 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      # Cache do Maven para acelerar builds futuros
+      - name: Cache Maven repository
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven
+          
+      # Clonar o repositório da aplicação Produção
+      - name: Clone Produção Repo
+        run: git clone https://github.com/brunobucci/soat7grupo5-producao.git producao
+  
+
+      # Executar os testes com cobertura
+      - name: Run Tests Produção with Coverage
+        run: |
+          cd producao
+          mvn clean verify
+
+      # Build da aplicação
+      - name: Build Produção Application
+        run: |
+          cd producao
+          mvn clean package -DskipTests
+
+      # Verificar o arquivo .jar gerado
+      - name: Verify Producao Build Output
+        run: |
+          ls -l producao/target/
+
+      # Deploy para a instância EC2
+      - name: Deploy Producao to EC2
+        env:
+          AWS_PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
+          AWS_HOST: ${{ secrets.AWS_HOST_producao }}
+        run: |
+          # Criar arquivo temporário para a chave privada
+          echo "$AWS_PRIVATE_KEY" > private_key.pem
+          chmod 600 private_key.pem
+
+          # Fazer o upload do arquivo .jar para a instância EC2
+          scp -o StrictHostKeyChecking=no -i private_key.pem producao/target/*.jar ubuntu@$AWS_HOST:/home/ubuntu/
+
+          # Reiniciar o serviço na instância EC2
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@$AWS_HOST "sudo systemctl restart producao-app"
+
+          # Remover a chave privada temporária
+          rm -f private_key.pem
