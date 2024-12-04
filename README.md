@@ -2,10 +2,14 @@
 
 ## Repositório: Microserviço Produção (MongoDB)
 
+### Videos
 
-### Video
+Link para o video detalhando o funcionamento das aplicações (Micro-serviços):  https://youtu.be/yakGs227jBI
 
-Link do vídeo detalhando o Microserviço Produção: https://www.youtube.com/watch?v=YplkjITVdOM
+Link para o video detalhando a arquitetura de Micro-serviços: https://youtu.be/dDpzmyWP7ak
+
+Link para o video detalhando o processo de CI/CD:  https://youtu.be/Nk5S3jUgzmg
+
 
 ### Swagger
 Link do Swagger do Microserviço Produção: [http://ec2-44-203-38-152.compute-1.amazonaws.com:8080/swagger-ui/index.html](http://ec2-3-83-216-132.compute-1.amazonaws.com:8083/swagger-ui/index.html)
